@@ -99,6 +99,7 @@ const uploadToFirebase = async (path: string): Promise<string> => {
   try {
     const res = await bucket.upload(path, {
       destination: fileName,
+      public: true,
     });
     return res[1].mediaLink;
   } catch (error) {
