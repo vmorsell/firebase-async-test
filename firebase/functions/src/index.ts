@@ -6,21 +6,6 @@ import got from 'got';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
-/**
- * Function triggered by insertion of new documents in the collection 'images'
- * in Firestore.
- *
- * It downloads the file from the url found in the document, uploads it to
- * Firebase Storage and adds the Firebase Storage URL to the document.
- */
 export const imageFetcher = functions
   .region('europe-west1')
   .firestore.document('images/{id}')
