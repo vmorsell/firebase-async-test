@@ -1,20 +1,30 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { filenameFromPath } from './index';
+import { filenameFromPath, fileExtFromURL } from './index';
 
 describe('filenameFromPath', () => {
-  it('should handle paths without slashes', () => {
-    const res = filenameFromPath('x');
-    expect(res).equal('x');
-  });
+  const tests = [
+    {
+      it: 'should handle paths without slashes',
+      path: 'x',
+      want: 'x',
+    },
+    {
+      it: 'should handle paths with one slash',
+      path: 'x/y',
+      want: 'y',
+    },
+    {
+      it: 'should handle paths with multiple slashes',
+      path: 'x/y/z',
+      want: 'z',
+    },
+  ];
 
-  it('should handle paths with one slash', () => {
-    const res = filenameFromPath('x/y');
-    expect(res).equal('y');
-  });
-
-  it('should handle paths with multiple slashes', () => {
-    const res = filenameFromPath('x/y/z');
-    expect(res).equal('z');
-  });
+  for (const t of tests) {
+    it(t.it, () => {
+      const res = filenameFromPath(t.path);
+      expect(res).equal(t.want);
+    });
+  }
 });
