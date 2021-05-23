@@ -40,7 +40,7 @@ function App() {
       <header className="header">
         <img src={logo} className="logo" alt="logo" />
       </header>
-      <main>
+      <main className="main">
         <div className="form">
           <input
             type="text"
