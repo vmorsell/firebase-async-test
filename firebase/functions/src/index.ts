@@ -93,11 +93,12 @@ const download = async (url: string, id: string): Promise<string> => {
  * @returns Path to file in Firebase Storage.
  */
 const uploadToFirebase = async (path: string): Promise<string> => {
+  const fileName = filenameFromPath(path);
   const bucket = admin.storage().bucket();
 
   try {
-    bucket.upload(path, {
-      destination: 'images/name',
+    const res = await bucket.upload(path, {
+      destination: fileName,
     });
     return '';
   } catch (error) {
