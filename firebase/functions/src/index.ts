@@ -41,11 +41,12 @@ export const imageFetcher = functions
 
     try {
       const file = await download(doc.url, id);
+      if (!file) {
         throw new Error('unknown download error');
       }
 
       const storagePath = await uploadToFirebase(file);
-      if (storagePath === '') {
+      if (!storagePath) {
         throw new Error('unknown upload error');
       }
 
