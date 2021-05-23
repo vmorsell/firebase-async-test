@@ -1,8 +1,8 @@
 .PHONY: deploy
 deploy:
-	firebase deploy
+	cd firebase && firebase deploy
 
 .PHONY: login
 login:
-	firebase login
+	cd firebase && firebase login
 
