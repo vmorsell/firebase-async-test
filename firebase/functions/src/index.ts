@@ -92,8 +92,8 @@ const download = async (url: string, id: string): Promise<string> => {
 
 /**
  * uploadToFirebase uploads a file from local filesystem to Firebase Storage.
- * @param path Path to local file.
- * @returns Path to file in Firebase Storage.
+ * @param path Src to local file.
+ * @returns File URL to Firebase Storage.
  */
 const uploadToFirebase = async (path: string): Promise<string> => {
   functions.logger.debug(`uploadToFirebase(path: ${path})`);
