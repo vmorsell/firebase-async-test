@@ -9,7 +9,7 @@ export type ImageProps = {
 
 export const Image = ({ imageRef }: ImageProps) => {
   const [data, setData] = useState<firebase.firestore.DocumentData>();
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<firebase.firestore.FirestoreError>();
 
   const unsubscribe = imageRef.onSnapshot(
     (s) => {
@@ -34,7 +34,7 @@ export const Image = ({ imageRef }: ImageProps) => {
             : 'none',
       }}
     >
-      {error && 'error'}
+      {error && error.message}
     </div>
   );
 };
