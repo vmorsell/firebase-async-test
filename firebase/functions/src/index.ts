@@ -32,14 +32,14 @@ export const imageFetcher = functions
         throw new Error('unknown download error');
       }
 
-      const storagePath = await uploadToFirebase(file);
-      if (!storagePath) {
+      const storageURL = await uploadToFirebase(file);
+      if (!storageURL) {
         throw new Error('unknown upload error');
       }
 
       return snap.ref.set(
         {
-          storagePath: storagePath,
+          storageURL: storageURL,
         },
         { merge: true }
       );
