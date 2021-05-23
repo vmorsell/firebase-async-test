@@ -14,13 +14,15 @@ import * as fs from 'fs';
 // });
 
 /**
- * DownloadImage downloads the image from newly created documents in the
- * Firestore 'images' collection and uploads them to Firebase Storage.
+ * Function triggered by insertion of new documents in the collection 'images'
+ * in Firestore.
  *
- * The Firebase Storage URL of the file is added to the image document.
+ * It downloads the file from the url found in the document, uploads it to
+ * Firebase Storage and adds the Firebase Storage URL to the document.
  */
-export const imageAdded = functions.firestore
-  .document('images/{imageID}')
+export const imageFetcher = functions
+  .region('europe-west1')
+  .firestore.document('images/{imageID}')
   .onCreate(async (snap) => {
     const doc = snap.data();
     if (!doc.url) {
