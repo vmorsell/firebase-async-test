@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import { Image } from './components/image';
 import './App.css';
@@ -34,6 +34,12 @@ function App() {
     });
     setImageRefs([...imageRefs, res]);
   };
+
+  useEffect(() => {
+    if (imageRefs.length > 4) {
+      setImageRefs(imageRefs.slice(1));
+    }
+  }, [imageRefs]);
 
   return (
     <div className="app">
