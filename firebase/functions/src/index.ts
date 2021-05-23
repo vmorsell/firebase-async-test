@@ -64,11 +64,19 @@ export const imageFetcher = functions
 /**
  * Download a file from an url and returns it's fs path.
  * @param url URL of the file to download.
- * @returns Name of the downloaded file.
+ * @param fileName Name to use for the file.
+ * @returns Full path to the downloaded file.
  */
-const download = async (url: string): Promise<string> => {
+const download = async (url: string, id: string): Promise<string> => {
   try {
-    const path = '/tmp/file.tmp';
+    let ext = fileExtFromURL(url);
+    if (!ext) {
+      functions.logger.warn(`Can't decide extension for ${url}.`);
+      ext = 'tmp';
+    }
+    functions.logger.debug(`Using file extension ${ext}`);
+
+    const path = `/tmp/${id}.${ext}`;
 
     const pipeline = promisify(stream.pipeline);
     await pipeline(got.stream(url), fs.createWriteStream(path));
@@ -109,4 +117,18 @@ export const filenameFromPath = (path: string): string => {
     return path;
   }
   return path.substring(pos + 1);
+};
+
+/**
+ * Parse a file name or path and return the file extension.
+ * @param url The URL to parse
+ * @returns Extension if found, otherwise empty string
+ */
+export const fileExtFromURL = (url: string): string => {
+  const pattern = /^.*\/[a-zA-Z0-9\-_]+\.([a-zA-Z0-9_]+)(?:[#?].*)?$/;
+  const ext = url.match(pattern);
+  if (ext == null || ext.length !== 2) {
+    return '';
+  }
+  return ext[1];
 };
