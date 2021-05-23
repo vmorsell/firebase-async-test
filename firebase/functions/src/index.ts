@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import * as stream from 'stream';
 import got from 'got';
 import * as fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
@@ -25,14 +26,21 @@ export const imageFetcher = functions
   .firestore.document('images/{id}')
   .onCreate(async (snap) => {
     const doc = snap.data();
+
+    let id = doc.id;
+    if (!id) {
+      functions.logger.warn('Document id missing. Falling back to uuid.');
+      id = uuidv4();
+    }
+    functions.logger.debug(`id = ${id}`);
+
     if (!doc.url) {
       functions.logger.error('missing URL in document');
       return;
     }
 
     try {
-      const file = await download(doc.url);
-      if (file === '') {
+      const file = await download(doc.url, id);
         throw new Error('unknown download error');
       }
 
