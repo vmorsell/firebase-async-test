@@ -22,7 +22,7 @@ import * as fs from 'fs';
  */
 export const imageFetcher = functions
   .region('europe-west1')
-  .firestore.document('images/{imageID}')
+  .firestore.document('images/{id}')
   .onCreate(async (snap) => {
     const doc = snap.data();
     if (!doc.url) {
