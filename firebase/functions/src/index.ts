@@ -6,6 +6,8 @@ import got from 'got';
 import * as fs from 'fs';
 import { v4 as uuidv4 } from 'uuid';
 
+admin.initializeApp();
+
 export const imageFetcher = functions
   .region('europe-west1')
   .firestore.document('images/{id}')
