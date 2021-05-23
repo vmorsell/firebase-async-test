@@ -26,13 +26,13 @@ export const imageFetcher = functions
   .firestore.document('images/{id}')
   .onCreate(async (snap) => {
     const doc = snap.data();
+    functions.logger.debug(doc);
 
     let id = doc.id;
     if (!id) {
       functions.logger.warn('Document id missing. Falling back to uuid.');
       id = uuidv4();
     }
-    functions.logger.debug(`id = ${id}`);
 
     if (!doc.url) {
       functions.logger.error('missing URL in document');
@@ -69,6 +69,7 @@ export const imageFetcher = functions
  * @returns Full path to the downloaded file.
  */
 const download = async (url: string, id: string): Promise<string> => {
+  functions.logger.debug(`download(url: ${url}, id: ${id})`);
   try {
     let ext = fileExtFromURL(url);
     if (!ext) {
@@ -82,6 +83,7 @@ const download = async (url: string, id: string): Promise<string> => {
     const pipeline = promisify(stream.pipeline);
     await pipeline(got.stream(url), fs.createWriteStream(path));
 
+    functions.logger.debug(`download successful: ${path}`);
     return path;
   } catch (error) {
     throw new Error(`download: ${error}`);
@@ -94,6 +96,7 @@ const download = async (url: string, id: string): Promise<string> => {
  * @returns Path to file in Firebase Storage.
  */
 const uploadToFirebase = async (path: string): Promise<string> => {
+  functions.logger.debug(`uploadToFirebase(path: ${path})`);
   const fileName = filenameFromPath(path);
   const bucket = admin.storage().bucket();
 
@@ -102,9 +105,11 @@ const uploadToFirebase = async (path: string): Promise<string> => {
       destination: fileName,
       public: true,
     });
+
+    functions.logger.debug(`uploadToFirebase successful: ${res[1].mediaLink}`);
     return res[1].mediaLink;
   } catch (error) {
-    throw new Error(`upload to firebase: ${error}`);
+    throw new Error(`uploadToFirebase: ${error}`);
   }
 };
 
