@@ -19,8 +19,8 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .logo {
-    animation: logo-spin infinite 20s linear;
+  .logo.spin {
+    animation: logo-spin 1 1.5s ease-in-out;
   }
 }
 
@@ -54,6 +54,6 @@ input {
     transform: rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: rotate(720deg);
   }
 }
