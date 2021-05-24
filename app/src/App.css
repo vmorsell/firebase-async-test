@@ -43,6 +43,7 @@ input {
 .images {
   display: flex;
   flex-direction: row-reverse;
+  height: 20vw;
 }
 
 .App-link {

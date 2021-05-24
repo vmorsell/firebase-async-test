@@ -1,6 +1,7 @@
 .image {
-  width: 400px;
-  height: 200px;
+  width: 20vw;
+  height: 20vw;
+  margin: 0 0.2vw;
   background-color: #ababab;
   background-position: center center;
   background-size: cover;
