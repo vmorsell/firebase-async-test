@@ -33,3 +33,43 @@ Firebase project that handles image fetch requests using Firestore, Cloud Storag
 
 - Access rules
 - Retries
+- Make firebase project easy to deploy on new instances.
+
+## Requirements
+
+- Node version 12.x
+- NPM
+- Yarn (optional)
+- [Firebase CLI](https://firebase.google.com/docs/cli/)
+- Make
+
+## Get started
+
+1. Log in to Firebase
+
+   ```bash
+   make login
+   ```
+
+1. Initialize Firebase project on your account (unknown command).
+
+1. Deploy project
+
+   ```bash
+   make deploy
+   ```
+
+1. Copy env file example
+
+   ```bash
+   (cd app && copy .env.example .env)
+   ```
+
+1. Populate `app/.env` with your project settings.
+
+1. Run React app
+   ```bash
+   (cd app && yarn start)
+   # or
+   (cd app && npm start)
+   ```
